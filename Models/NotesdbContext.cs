@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace NotesApi.Models;
+
+public partial class NotesdbContext : DbContext
+{
+    public NotesdbContext()
+    {
+    }
+
+    public NotesdbContext(DbContextOptions<NotesdbContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<Note> Notes { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=MXM-VROTHA;Database=Notesdb;User Id=Rotha;Password=Maxima@2;TrustServerCertificate=True;");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}
